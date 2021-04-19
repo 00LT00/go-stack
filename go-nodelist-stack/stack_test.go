@@ -1,4 +1,4 @@
-package go-stack
+package nodelist_stack
 
 import (
 	"testing"

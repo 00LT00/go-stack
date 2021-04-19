@@ -1,4 +1,4 @@
-package go-stack
+package slice_stack
 
 import "sync"
 
@@ -9,7 +9,11 @@ type stack struct {
 }
 
 func NewStack() *stack {
-	return &stack{lock: &sync.RWMutex{}, arr: nil, length: 0}
+	return &stack{
+		lock:   &sync.RWMutex{},
+		arr:    nil,
+		length: 0,
+	}
 }
 
 func (s *stack) Push(value ...interface{}) {
