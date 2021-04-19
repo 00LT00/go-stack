@@ -1,6 +1,6 @@
 # stack的两种实现方式对比
 
-### slice实现
+### Slice实现
 
 ```
 $go-stack\go-stack-slice>go test -bench=".*" -benchmem -v
@@ -16,7 +16,7 @@ ok      github.com/00LT00/go-stack/go-stack-slice       6.351s
 
 ```
 
-### nodelist实现
+### NodeList实现
 
 ```
 $go-stack\go-nodelist-stack>go test -bench=".*" -benchmem -v
@@ -32,7 +32,14 @@ ok      github.com/00LT00/go-stack/go-nodelist-stack    9.343s
 
 ```
 
-|          |    push    |    pop     |
+|   速度   |    push    |    pop     |
 | :------: | :--------: | :--------: |
-|  slice   | 71.2 ns/op | 21.5 ns/op |
-| nodelist | 71.0 ns/op | 23.1 ns/op |
+|  Slice  | 71.2 ns/op | 21.5 ns/op |
+| NodeList | 71.0 ns/op | 23.1 ns/op |
+
+|   内存   |  push   | 内存分配次数 |
+| :------: | :-----: | :----------: |
+|  Slice   | 94 B/op |      0       |
+| NodeList | 32 B/op |      1       |
+
+虽然速度差距不大，但是相对来说自定义数据结构NodeList的内存更加合理，因此推荐使用NodeList版本
