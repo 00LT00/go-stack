@@ -1,4 +1,4 @@
-package nodelist_stack
+package nodelistStack
 
 import (
 	"testing"

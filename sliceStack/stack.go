@@ -1,41 +1,26 @@
-package nodelist_stack
+package sliceStack
 
 import "sync"
 
-type node struct {
-	value interface{}
-	prev  *node
-}
-
 type stack struct {
 	lock   *sync.RWMutex
-	top    *node
+	arr    []interface{}
 	length int
 }
 
 func NewStack() *stack {
 	return &stack{
-		length: 0,
-		top:    nil,
 		lock:   &sync.RWMutex{},
+		arr:    nil,
+		length: 0,
 	}
 }
 
-func (s *stack) Push(value interface{}) {
+func (s *stack) Push(value ...interface{}) {
 	s.lock.Lock()
 	defer s.lock.Unlock()
-	if s.length == 0 {
-		s.top = &node{
-			value: value,
-		}
-	} else {
-		node := &node{
-			value: value,
-			prev:  s.top,
-		}
-		s.top = node
-	}
-	s.length++
+	s.arr = append(s.arr, value...)
+	s.length += len(value)
 }
 
 func (s *stack) Peek() interface{} {
@@ -43,15 +28,16 @@ func (s *stack) Peek() interface{} {
 		return nil
 	}
 
-	return s.top.value
+	return s.arr[s.length-1]
 }
 
 func (s *stack) Pop() interface{} {
 	s.lock.Lock()
 	defer s.lock.Unlock()
 	value := s.Peek()
-	s.top = s.top.prev
 	s.length--
+	s.arr = s.arr[:s.length]
+
 	return value
 }
 

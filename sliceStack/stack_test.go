@@ -1,4 +1,4 @@
-package slice_stack
+package sliceStack
 
 import (
 	"testing"
